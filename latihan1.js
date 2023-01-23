@@ -65,15 +65,27 @@ const blogFirst = new Blog({
 // })
 
 // untuk mengambil data, berdasarkan Judul
-Blog.findOne({ 'title' : 'Buku Harry Potter' }, (err, res) => {
-    if(err) console.log(err);
-    console.log('first result', res)
-})
+// Blog.findOne({ 'title' : 'Buku Harry Potter' }, (err, res) => {
+//     if(err) console.log(err);
+//     console.log('first result', res)
+// })
 
 // untuk mengambil data, jika judul mengandung kata 'Harry'
-Blog.find({ 'title' : /Harry/ }, 'title author', (err, res) => {
-    if(err) console.log(err);
-    console.log('second result', res)
-})
+// Blog.find({ 'title' : /Harry/ }, 'title author', (err, res) => {
+//     if(err) console.log(err);
+//     console.log('second result', res)
+// })
+
+// untuk mengambil data, jika judul mengandung kata 'Harry', menggunakan query builder
+const query = Blog.findOne({ 'title': 'Buku Harry Potter' });
+
+// untuk menentukan select query
+query.select('title author');
+
+query.exec(function (err, res) {
+    if (err) return handleError(err);
+    // Prints "Space Ghost is a talk show host."
+    console.log('third result', res.title, res.author);
+});
 
 
