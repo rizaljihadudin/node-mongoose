@@ -35,46 +35,45 @@ const blogFirst = new Blog({
 })
 
 // melakukan save ke dalam collection Blog
-// blogFirst.save((err, res) => {
-//     if (err) return handleError(err);
-//     // saved!
-//     console.log(res)
-//     console.log('successfully created Blog')
-// });
+blogFirst.save((err, res) => {
+    if (err) return handleError(err);
+    // saved!
+    console.log(res)
+    console.log('successfully created data')
+});
 
 // melakukan save, dengan cara kedua
-// const blogSecond = new Blog({
-//     title: 'Buku The Lord of the Rings',
-//     author: 'J. R. R. Tolkien',
-//     body: 'The Lord of the Rings adalah seri film berisi tiga film petualangan fantasi yang disutradarai Peter Jackson. Film tersebut berdasarkan novel The Lord of the Rings oleh J. R. R. Tolkien. Film-film tersebut berjudul The Fellowship of the Ring, The Two Towers dan The Return of the King.'
-// })
+const blogSecond = new Blog({
+    title: 'Buku The Lord of the Rings',
+    author: 'J. R. R. Tolkien',
+    body: 'The Lord of the Rings adalah seri film berisi tiga film petualangan fantasi yang disutradarai Peter Jackson. Film tersebut berdasarkan novel The Lord of the Rings oleh J. R. R. Tolkien. Film-film tersebut berjudul The Fellowship of the Ring, The Two Towers dan The Return of the King.'
+})
 
-// Blog.create(blogSecond, (err, res) => {
-//     if (err) return handleError(err);
-//     // saved!
-
-//     console.log(res);
-//     console.log('Successfuly create data')
-// });
+Blog.create(blogSecond, (err, res) => {
+    if (err) return handleError(err);
+    // saved!
+    console.log(res);
+    console.log('Successfuly create data')
+});
   
 
 // untuk mengambil semua data dari database MongoDB
-// Blog.find((err, res) => {
-//     if(err) console.log(err);
-//     console.log(res)
-// })
+Blog.find((err, res) => {
+    if(err) console.log(err);
+    console.log(res)
+})
 
 // untuk mengambil data, berdasarkan Judul
-// Blog.findOne({ 'title' : 'Buku Harry Potter' }, (err, res) => {
-//     if(err) console.log(err);
-//     console.log('first result', res)
-// })
+Blog.findOne({ 'title' : 'Buku Harry Potter' }, (err, res) => {
+    if(err) console.log(err);
+    console.log('first result', res)
+})
 
 // untuk mengambil data, jika judul mengandung kata 'Harry'
-// Blog.find({ 'title' : /Harry/ }, 'title author', (err, res) => {
-//     if(err) console.log(err);
-//     console.log('second result', res)
-// })
+Blog.find({ 'title' : /Harry/ }, 'title author', (err, res) => {
+    if(err) console.log(err);
+    console.log('second result', res)
+})
 
 // untuk mengambil data, jika judul mengandung kata 'Harry', menggunakan query builder
 const query = Blog.findOne({ 'title': 'Buku Harry Potter' });
@@ -84,8 +83,22 @@ query.select('title author');
 
 query.exec(function (err, res) {
     if (err) return handleError(err);
-    // Prints "Space Ghost is a talk show host."
     console.log('third result', res.title, res.author);
+});
+
+
+// untuk mengupdate data, berdasarkan title : 'Buku Harry Potter'
+Blog.updateOne({ title: 'Buku Harry Potter' }, { author: 'Rizal' }, (err, res) => {
+    if (err) return handleError(err);
+    console.log(res);
+    console.log('Successfuly update data!')
+});
+
+
+// untuk menghapus data, berdasarkan author : 'Rizal'
+Blog.deleteOne({ author: 'Rizal' }, (err) => {
+    if (err) return handleError(err);
+    console.log('Successfuly delete data!')
 });
 
 
